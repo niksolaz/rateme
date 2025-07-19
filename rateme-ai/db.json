@@ -1,0 +1,213 @@
+{
+  "posts": [
+    { "id": "1", "title": "a title", "views": 100 },
+    { "id": "2", "title": "another title", "views": 200 }
+  ],
+  "comments": [
+    { "id": "1", "text": "a comment about post 1", "postId": "1" },
+    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "tests": [
+    {
+      "id": "1",
+      "titolo": "Test di Valutazione Prodotto",
+      "breve_descrizione": "Valuta la qualità e l\"usabilità di un prodotto attraverso domande specifiche e metriche standardizzate.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "titolo": "Test di Analisi Servizio",
+      "breve_descrizione": "Analizza la qualità del servizio offerto, la soddisfazione del cliente e le aree di miglioramento.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "titolo": "Test di Review Sistema",
+      "breve_descrizione": "Esamina le performance e l\"efficienza di un sistema informatico o software.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "titolo": "Test di Valutazione UX",
+      "breve_descrizione": "Misura l\"esperienza utente attraverso test di usabilità e feedback qualitativi.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "titolo": "Test di Analisi Competitiva",
+      "breve_descrizione": "Confronta il tuo prodotto o servizio con quelli della concorrenza.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "titolo": "Test di Valutazione Brand",
+      "breve_descrizione": "Analizza la percezione del brand e la sua posizione nel mercato.",
+      "emails": [{
+                "id": "1",
+                "email": "test@test.it",
+                "nome": "Mario",
+                "cognome": "Rossi"
+              }, {
+                "id": "2",
+                "email": "test2@test.it",
+                "nome": "Luigi Bianchi",
+                "cognome": "Bianchi"
+              }],
+      "domande": [
+        {
+          "id": "1",
+          "testo": "Qual è la tua età?",
+          "risposte": ["18-25", "26-35", "36-45", "46-55", "56-65", "66+"]
+        },
+        {
+          "id": "2",
+          "testo": "Qual è il tuo genere?",
+          "risposte": ["Maschio", "Femmina"]
+        },
+        {
+          "id": "3",
+          "testo": "Qual è il tuo livello di soddisfazione con il prodotto?",
+          "risposte": ["Molto soddisfatto", "Soddisfatto", "Neutro", "Insoddisfatto", "Molto insoddisfatto"]
+        }
+      ]
+    }
+  ]
+}
