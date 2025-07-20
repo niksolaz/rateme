@@ -15,19 +15,10 @@
         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
           Email
         </label>
-        <UInput
-          id="email"
-          v-model="form.email"
-          type="email"
-          placeholder="la-tua-email@esempio.com"
-          required
-          class="w-full"
-          :ui="{ 
-            base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 dark:focus:ring-blue-400 focus:shadow-sm',
-            icon: { base: 'flex-shrink-0 h-4 w-4' },
-            input: { base: 'block w-full border-0 focus:ring-0 focus:outline-none bg-transparent py-1.5 px-0 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6' }
-          }"
-        />
+        <UInput id="email" v-model="form.email" type="email" placeholder="la-tua-email@esempio.com" required
+          class="w-full" :ui="{
+            base: 'shadow px-3 py-2'
+          }" />
       </div>
 
       <!-- Password -->
@@ -35,64 +26,50 @@
         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
           Password
         </label>
-        <UInput
-          id="password"
-          v-model="form.password"
-          type="password"
-          placeholder="••••••••"
-          required
-          class="w-full"
-          :ui="{ 
-            base: 'relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 dark:focus:ring-blue-400 focus:shadow-sm',
-            icon: { base: 'flex-shrink-0 h-4 w-4' },
-            input: { base: 'block w-full border-0 focus:ring-0 focus:outline-none bg-transparent py-1.5 px-0 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6' }
-          }"
-        />
+        <UInput id="password" v-model="form.password" type="password" placeholder="••••••••" required class="w-full"
+          :ui="{
+            base: 'shadow px-3 py-2'
+          }" />
       </div>
 
       <!-- Remember me e Forgot password -->
       <div class="flex items-center justify-between">
-        <UCheckbox
-          v-model="form.rememberMe"
-          label="Ricordami"
-          name="remember-me"
-        />
-        <UButton
-          to="/forgot-password"
-          variant="link"
-          color="blue"
-          size="sm"
-        >
+        <div class="flex items-center gap-3">
+          <UCheckbox v-model="form.rememberMe" name="newsletter" :ui="{
+            container: 'border border-gray-300 rounded-md size-5 flex items-center justify-center',
+            icon: 'text-purple-500'
+          }" />
+          <span class="text-xs text-gray-700">
+            Ricordami
+          </span>
+        </div>
+        <UButton to="/forgot-password" :ui="{
+          base: 'text-xs text-purple-500 hover:text-purple-600'
+        }">
           Password dimenticata?
         </UButton>
       </div>
 
       <!-- Submit button -->
-      <UButton
-        type="submit"
-        color="blue"
-        variant="solid"
-        size="lg"
-        class="w-full"
-        :loading="isLoading"
-        :disabled="isLoading"
-      >
+      <UButton type="submit" :loading="isLoading" :disabled="isLoading" :ui="{
+        base: 'shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
+      }">
         {{ isLoading ? 'Accesso in corso...' : 'Accedi' }}
       </UButton>
     </form>
 
     <!-- Divider -->
-    <div class="relative my-6">
+    <!-- <div class="relative my-6">
       <div class="absolute inset-0 flex items-center">
         <div class="w-full border-t border-gray-300"></div>
       </div>
       <div class="relative flex justify-center text-sm">
         <span class="bg-white px-2 text-gray-500">Oppure continua con</span>
       </div>
-    </div>
+    </div> -->
 
     <!-- Social login -->
-    <div class="space-y-3">
+    <!-- <div class="space-y-3">
       <UButton
         color="gray"
         variant="outline"
@@ -107,20 +84,15 @@
             <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
         </template>
-        Continua con Google
-      </UButton>
-    </div>
+Continua con Google
+</UButton>
+</div> -->
 
     <!-- Sign up link -->
     <div class="text-center mt-8">
       <p class="text-sm text-gray-600">
         Non hai un account?
-        <UButton
-          to="/register"
-          variant="link"
-          color="blue"
-          size="sm"
-        >
+        <UButton to="/register" variant="link" color="blue" size="sm">
           Registrati
         </UButton>
       </p>
@@ -129,48 +101,46 @@
 </template>
 
 <script setup>
-// Definizione del layout per questa pagina
-definePageMeta({
-  layout: 'auth'
-})
+  // Definizione del layout per questa pagina
+  definePageMeta({
+    layout: 'auth'
+  })
 
-// Reattività del form
-const form = ref({
-  email: '',
-  password: '',
-  rememberMe: false
-})
+  // Reattività del form
+  const form = ref({
+    email: '',
+    password: '',
+    rememberMe: false
+  })
 
-const isLoading = ref(false)
+  const isLoading = ref(false)
 
-// Gestione del login
-const handleLogin = async () => {
-  isLoading.value = true
-  
-  try {
-    // Simulazione di una chiamata API
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Qui andrà la logica di autenticazione reale
-    console.log('Login attempt:', form.value)
-    
-    // Reindirizzamento alla dashboard dopo il login
-    await navigateTo('/dashboard')
-    
-  } catch (error) {
-    console.error('Errore durante il login:', error)
-  } finally {
-    isLoading.value = false
+  // Gestione del login
+  const handleLogin = async () => {
+    isLoading.value = true
+
+    try {
+      // Simulazione di una chiamata API
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
+      // Qui andrà la logica di autenticazione reale
+      console.log('Login attempt:', form.value)
+
+      // Reindirizzamento alla dashboard dopo il login
+      await navigateTo('/dashboard')
+
+    } catch (error) {
+      console.error('Errore durante il login:', error)
+    } finally {
+      isLoading.value = false
+    }
   }
-}
 
-// Gestione del login con Google
-const handleGoogleLogin = () => {
-  console.log('Google login clicked')
-  // Implementa qui la logica per il login con Google
-}
+  // Gestione del login con Google
+  const handleGoogleLogin = () => {
+    console.log('Google login clicked')
+    // Implementa qui la logica per il login con Google
+  }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

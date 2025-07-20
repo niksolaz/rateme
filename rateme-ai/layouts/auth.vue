@@ -1,10 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+  <div
+    class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
     <div class="w-full max-w-md">
       <!-- Logo e titolo -->
       <div class="text-center mb-8">
         <NuxtLink to="/">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-4">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-4">
             <span class="text-2xl font-bold text-white">R</span>
           </div>
           <h1 class="text-2xl font-bold text-gray-900 mb-2">RateMe AI</h1>
@@ -28,12 +30,10 @@
 </template>
 
 <script setup>
-// Layout per pagine di autenticazione
-definePageMeta({
-  layout: 'auth'
-})
+  // Layout per pagine di autenticazione
+  definePageMeta({
+    layout: 'auth'
+  })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
