@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: false },
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/ui', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/ui', '@nuxtjs/tailwindcss', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
       supabaseUrl: process.env.SUPABASE_URL,

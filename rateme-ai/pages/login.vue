@@ -50,6 +50,11 @@
         </UButton>
       </div>
 
+      <!-- Error Message -->
+      <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-md">
+        <p class="text-sm text-red-600">{{ error }}</p>
+      </div>
+
       <!-- Submit button -->
       <UButton type="submit" :loading="isLoading" :disabled="isLoading" :ui="{
         base: 'shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
@@ -106,6 +111,9 @@ Continua con Google
     layout: 'auth'
   })
 
+  const { signIn } = useAuth()
+  const router = useRouter()
+
   // Reattività del form
   const form = ref({
     email: '',
@@ -114,30 +122,27 @@ Continua con Google
   })
 
   const isLoading = ref(false)
+  const error = ref('')
 
   // Gestione del login
   const handleLogin = async () => {
     isLoading.value = true
+    error.value = ''
 
-    try {
-      // Simulazione di una chiamata API
-      await new Promise(resolve => setTimeout(resolve, 2000))
+    const { data: _data, error: loginError } = await signIn(form.value.email, form.value.password)
 
-      // Qui andrà la logica di autenticazione reale
-      console.log('Login attempt:', form.value)
-
-      // Reindirizzamento alla dashboard dopo il login
-      await navigateTo('/dashboard')
-
-    } catch (error) {
-      console.error('Errore durante il login:', error)
-    } finally {
-      isLoading.value = false
+    if (loginError) {
+      error.value = loginError.message
+    } else {
+      // Redirect alla dashboard o homepage
+      await router.push('/dashboard')
     }
+
+    isLoading.value = false
   }
 
   // Gestione del login con Google
-  const handleGoogleLogin = () => {
+  const _handleGoogleLogin = () => {
     console.log('Google login clicked')
     // Implementa qui la logica per il login con Google
   }

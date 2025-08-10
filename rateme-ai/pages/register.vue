@@ -68,6 +68,28 @@
           }" />
       </div>
 
+      <!-- Indirizzo e CAP -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2">
+          <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+            Indirizzo
+          </label>
+          <UInput id="address" v-model="form.address" type="text" placeholder="Via, numero civico" class="w-full"
+            :ui="{
+              base: 'shadow px-3 py-2'
+            }" />
+        </div>
+        <div>
+          <label for="cap" class="block text-sm font-medium text-gray-700 mb-2">
+            CAP
+          </label>
+          <UInput id="cap" v-model="form.cap" type="text" placeholder="00000" class="w-full"
+            :ui="{
+              base: 'shadow px-3 py-2'
+            }" />
+        </div>
+      </div>
+
       <!-- Piano -->
       <div class="py-3">
         <label for="plan" class="block text-sm font-medium text-gray-700 mb-2">
@@ -114,6 +136,15 @@
         <span class="text-xs text-gray-700">
           Voglio ricevere aggiornamenti e offerte speciali via email
         </span>
+      </div>
+
+      <!-- Error/Success Messages -->
+      <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-md">
+        <p class="text-sm text-red-600">{{ error }}</p>
+      </div>
+      
+      <div v-if="success" class="p-3 bg-green-50 border border-green-200 rounded-md">
+        <p class="text-sm text-green-600">{{ success }}</p>
       </div>
 
       <!-- Submit button -->
@@ -174,9 +205,11 @@ Registrati con Google
     layout: 'auth'
   })
 
+  const { signUp } = useAuth()
+  const router = useRouter()
+
   // Opzioni per i piani
   const planOptions = ref([
-    { label: 'Scegli un piano', value: 'none' },
     { label: 'Free - €0/mese', value: 'free' },
     { label: 'Pro - €29/mese', value: 'pro' },
     { label: 'Enterprise - €99/mese', value: 'enterprise' }
@@ -189,53 +222,53 @@ Registrati con Google
     email: '',
     password: '',
     confirmPassword: '',
-    plan: 'none',
+    plan: 'free',
     acceptTerms: false,
-    newsletter: false
+    newsletter: false,
+    address: '',
+    cap: ''
   })
 
   const isLoading = ref(false)
+  const error = ref('')
+  const success = ref('')
 
   // Gestione della registrazione
   const handleRegister = async () => {
+    error.value = ''
+    success.value = ''
+
     // Validazione
     if (form.value.password !== form.value.confirmPassword) {
-      alert('Le password non coincidono')
+      error.value = 'Le password non coincidono'
       return
     }
 
     if (form.value.password.length < 8) {
-      alert('La password deve essere di almeno 8 caratteri')
+      error.value = 'La password deve essere di almeno 8 caratteri'
       return
     }
 
     if (!form.value.acceptTerms) {
-      alert('Devi accettare i termini di servizio')
+      error.value = 'Devi accettare i termini di servizio'
       return
     }
 
     isLoading.value = true
 
-    try {
-      // Simulazione di una chiamata API
-      await new Promise(resolve => setTimeout(resolve, 2000))
+    const { data: _data, error: registerError } = await signUp(form.value)
 
-      // Qui andrà la logica di registrazione reale
-      console.log('Registration attempt:', form.value)
-
-      // Reindirizzamento alla dashboard dopo la registrazione
-      await navigateTo('/dashboard')
-
-    } catch (error) {
-      console.error('Errore durante la registrazione:', error)
-    } finally {
-      isLoading.value = false
+    if (registerError) {
+      error.value = registerError.message
+    } else {
+      success.value = 'Registrazione completata! Controlla la tua email per confermare.'
+      // Redirect to login after successful registration
+      setTimeout(() => {
+        router.push('/login')
+      }, 2000)
     }
+
+    isLoading.value = false
   }
 
-  // Gestione della registrazione con Google
-  const handleGoogleRegister = () => {
-    console.log('Google registration clicked')
-    // Implementa qui la logica per la registrazione con Google
-  }
 </script>
