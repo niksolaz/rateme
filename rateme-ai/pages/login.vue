@@ -57,7 +57,7 @@
 
       <!-- Submit button -->
       <UButton type="submit" :loading="isLoading" :disabled="isLoading" :ui="{
-        base: 'shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
+        base: 'cursor-pointer shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
       }">
         {{ isLoading ? 'Accesso in corso...' : 'Accedi' }}
       </UButton>

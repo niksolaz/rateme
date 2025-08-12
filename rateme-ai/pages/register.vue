@@ -74,19 +74,17 @@
           <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
             Indirizzo
           </label>
-          <UInput id="address" v-model="form.address" type="text" placeholder="Via, numero civico" class="w-full"
-            :ui="{
-              base: 'shadow px-3 py-2'
-            }" />
+          <UInput id="address" v-model="form.address" type="text" placeholder="Via, numero civico" class="w-full" :ui="{
+            base: 'shadow px-3 py-2'
+          }" />
         </div>
         <div>
           <label for="cap" class="block text-sm font-medium text-gray-700 mb-2">
             CAP
           </label>
-          <UInput id="cap" v-model="form.cap" type="text" placeholder="00000" class="w-full"
-            :ui="{
-              base: 'shadow px-3 py-2'
-            }" />
+          <UInput id="cap" v-model="form.cap" type="text" placeholder="00000" class="w-full" :ui="{
+            base: 'shadow px-3 py-2'
+          }" />
         </div>
       </div>
 
@@ -107,7 +105,7 @@
 
       <!-- Termini e condizioni -->
       <div class="flex items-center gap-3">
-        <UCheckbox v-model="form.acceptTerms" name="accept-terms" :ui="{
+        <UCheckbox v-model="form.acceptTerms" size="xl" name="accept-terms" :ui="{
           container: 'border border-gray-300 rounded-md size-5 flex items-center justify-center',
           icon: 'text-purple-500'
         }" />
@@ -129,7 +127,7 @@
 
       <!-- Newsletter -->
       <div class="flex items-center gap-3">
-        <UCheckbox v-model="form.newsletter" name="newsletter" :ui="{
+        <UCheckbox v-model="form.newsletter" size="xl" name="newsletter" :ui="{
           container: 'border border-gray-300 rounded-md size-5 flex items-center justify-center',
           icon: 'text-purple-500'
         }" />
@@ -142,14 +140,14 @@
       <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-md">
         <p class="text-sm text-red-600">{{ error }}</p>
       </div>
-      
+
       <div v-if="success" class="p-3 bg-green-50 border border-green-200 rounded-md">
         <p class="text-sm text-green-600">{{ success }}</p>
       </div>
 
       <!-- Submit button -->
-      <UButton type="submit" :loading="isLoading" :disabled="isLoading || !form.acceptTerms" :ui="{
-        base: 'shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
+      <UButton type="submit" :loading="isLoading" :disabled="isLoading" :ui="{
+        base: 'cursor-pointer shadow px-3 py-2 w-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-purple-500 hover:to-blue-500'
       }">
         {{ isLoading ? 'Creazione account...' : 'Crea Account' }}
       </UButton>
