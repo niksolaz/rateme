@@ -11,7 +11,7 @@ export default defineNuxtPlugin(async () => {
   // Ascolta i cambiamenti di stato dell'autenticazione
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN') {
-      console.log('Utente autenticato:', session?.user)
+      console.log('Utente autenticato')
     } else if (event === 'SIGNED_OUT') {
       console.log('Utente disconnesso')
     }

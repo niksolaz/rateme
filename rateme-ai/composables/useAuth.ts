@@ -6,28 +6,28 @@ export const useAuth = () => {
   const userDetails = ref<UserDetails | null>(null)
 
   // Debug: verifica se Supabase è inizializzato correttamente
-  console.log('useAuth initialized, $supabase:', $supabase)
+  console.log('useAuth initialized, $supabase')
 
-  // Registrazione completa con dettagli utente
+  // Registrazione solo auth (senza dettagli)
   const signUp = async (formData: RegistrationForm) => {
-    console.log('Starting signUp with data:', formData)
-    console.log('Supabase instance:', $supabase)
+    console.info('Starting signUp with data')
+    console.info('Supabase instance')
     
     try {
-      // 1. Crea l'account utente in auth.users
-      console.log('Attempting auth.signUp...')
+      // 1. Crea solo l'account utente in auth.users
+      console.info('Attempting auth.signUp...')
       const { data: authData, error: authError } = await $supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
       })
       
-      console.log('Auth result:', { authData, authError })
+      console.info('Auth session created')
       
       if (authError) throw authError
       
-      // 2. Se la registrazione auth è riuscita, salva i dettagli
+      // 2. Salva temporaneamente i dettagli in localStorage per l'inserimento futuro
       if (authData.user) {
-        const userDetailsData: Omit<UserDetails, 'id' | 'created_at' | 'updated_at'> = {
+        const userDetailsData = {
           first_name: formData.firstName,
           last_name: formData.lastName,
           email: formData.email,
@@ -38,17 +38,9 @@ export const useAuth = () => {
           cap: formData.cap || undefined
         }
 
-        const { error: detailsError } = await $supabase
-          .from('user_details')
-          .insert([{ 
-            id: authData.user.id, 
-            ...userDetailsData 
-          }])
-        
-        if (detailsError) {
-          // Se fallisce l'inserimento dei dettagli, elimina l'utente auth
-          console.error('Errore nel salvare i dettagli utente:', detailsError)
-          throw new Error('Errore durante la registrazione dei dettagli utente')
+        // Salva temporaneamente in localStorage con l'ID utente
+        if (process.client) {
+          localStorage.setItem(`pending_user_details_${authData.user.id}`, JSON.stringify(userDetailsData))
         }
       }
       
@@ -59,7 +51,44 @@ export const useAuth = () => {
     }
   }
 
-  // Login (rimane uguale)
+  // Inserisce i dettagli utente dalla cache temporanea
+  const insertPendingUserDetails = async (userId: string) => {
+    try {
+      if (!process.client) return null
+
+      // Recupera i dati dalla cache temporanea
+      const pendingData = localStorage.getItem(`pending_user_details_${userId}`)
+      if (!pendingData) return null
+
+      const userDetailsData = JSON.parse(pendingData)
+
+      // Inserisce i dettagli nel database
+      const { data, error } = await $supabase
+        .from('user_details')
+        .insert([{ 
+          id: userId, 
+          ...userDetailsData 
+        }])
+        .select()
+        .single()
+
+      if (error) {
+        console.error('Errore nell\'inserimento dei dettagli utente:', error)
+        return null
+      }
+
+      // Rimuove i dati temporanei
+      localStorage.removeItem(`pending_user_details_${userId}`)
+      
+      console.info('Dettagli utente inseriti con successo')
+      return data
+    } catch (error) {
+      console.error('Errore nell\'inserimento dei dettagli utente:', error)
+      return null
+    }
+  }
+
+  // Login con gestione dettagli mancanti
   const signIn = async (email: string, password: string) => {
     try {
       const { data, error } = await $supabase.auth.signInWithPassword({
@@ -73,7 +102,16 @@ export const useAuth = () => {
       
       // Carica anche i dettagli utente
       if (data.user) {
-        await loadUserDetails(data.user.id)
+        // Prima prova a caricare i dettagli esistenti
+        const existingDetails = await loadUserDetails(data.user.id)
+        
+        // Se non esistono, prova a inserire quelli in cache
+        if (!existingDetails) {
+          const insertedDetails = await insertPendingUserDetails(data.user.id)
+          if (insertedDetails) {
+            userDetails.value = insertedDetails
+          }
+        }
       }
       
       return { data, error: null }
@@ -163,6 +201,7 @@ export const useAuth = () => {
     signOut,
     getCurrentUser,
     loadUserDetails,
-    updateUserDetails
+    updateUserDetails,
+    insertPendingUserDetails
   }
 }
