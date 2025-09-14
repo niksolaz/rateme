@@ -27,7 +27,7 @@
           Password
         </label>
         <UInput id="password" v-model="form.password" type="password" placeholder="••••••••" required class="w-full"
-          :ui="{
+          autocomplete="current-password" :ui="{
             base: 'shadow px-3 py-2'
           }" />
       </div>
@@ -113,6 +113,7 @@ Continua con Google
 
   const { signIn } = useAuth()
   const router = useRouter()
+  const userStore = useUserStore()
 
   // Reattività del form
   const form = ref({
@@ -126,18 +127,38 @@ Continua con Google
 
   // Gestione del login
   const handleLogin = async () => {
+    console.log('=== START LOGIN ===')
     isLoading.value = true
     error.value = ''
 
+    console.log('Calling signIn...')
     const { data: _data, error: loginError } = await signIn(form.value.email, form.value.password)
+    console.log('SignIn completed:', { data: _data, error: loginError })
 
     if (loginError) {
+      console.log('Login error:', loginError.message)
       error.value = loginError.message
-    } else {
+    } else if (_data?.user) {
+      console.log('Login successful, user ID:', _data.user.id)
+
+      // Carica i dettagli utente e salvali nello store (senza bloccare il login)
+      console.log('Loading user details...')
+      try {
+        await userStore.loadUserDetail(_data.user.id)
+        console.log('User details loaded successfully')
+      } catch (e) {
+        console.error('Error loading user details:', e)
+        // Se non riesce a caricare, procedi comunque con il redirect
+        console.log('Proceeding with redirect despite user details error')
+      }
+
       // Redirect alla dashboard o homepage
+      console.log('Redirecting to dashboard...')
       await router.push('/dashboard')
+      console.log('Redirect completed')
     }
 
+    console.log('=== END LOGIN ===')
     isLoading.value = false
   }
 

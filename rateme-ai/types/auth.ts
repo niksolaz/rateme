@@ -10,6 +10,8 @@ export interface UserDetails {
   cap?: string
   created_at?: string
   updated_at?: string
+  is_admin?: boolean
+  is_email_confirmed?: boolean
 }
 
 export interface RegistrationForm {
@@ -23,4 +25,6 @@ export interface RegistrationForm {
   newsletter: boolean
   address?: string
   cap?: string
+  is_admin?: boolean
+  is_email_confirmed?: boolean
 }

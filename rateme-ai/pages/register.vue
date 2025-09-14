@@ -49,6 +49,7 @@
           Password
         </label>
         <UInput id="password" v-model="form.password" type="password" placeholder="••••••••" required class="w-full"
+          autocomplete="new-password"
           :ui="{
             base: 'shadow px-3 py-2'
           }" />
@@ -63,7 +64,7 @@
           Conferma Password
         </label>
         <UInput id="confirmPassword" v-model="form.confirmPassword" type="password" placeholder="••••••••" required
-          class="w-full" :ui="{
+          class="w-full" autocomplete="new-password" :ui="{
             base: 'shadow px-3 py-2'
           }" />
       </div>
@@ -260,9 +261,9 @@ Registrati con Google
       error.value = registerError.message
     } else {
       success.value = 'Registrazione completata! Controlla la tua email per confermare.'
-      // Redirect to login after successful registration
+      // Redirect to register-ok page instead of login
       setTimeout(() => {
-        router.push('/login')
+        router.push('/register-ok')
       }, 2000)
     }
 
